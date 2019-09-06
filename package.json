@@ -1,0 +1,17 @@
+{
+  "name": "big-data-practise-github",
+  "version": "1.0.0",
+  "description": "A big data skeleton to create a big data scenario",
+  "main": "index.js",
+  "repository": "https://github.com/92hackers/big-data-practise.git",
+  "author": "chenyuan <cy476571@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "express": "^4.17.1",
+    "mockjs": "^1.0.1-beta3",
+    "mysql": "^2.17.1",
+    "request": "^2.88.0",
+    "sequelize": "^5.18.1"
+  }
+}
