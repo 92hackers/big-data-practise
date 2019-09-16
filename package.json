@@ -7,6 +7,9 @@
   "author": "chenyuan <cy476571@gmail.com>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "generate-data": "node data-generator/index.js"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "mockjs": "^1.0.1-beta3",

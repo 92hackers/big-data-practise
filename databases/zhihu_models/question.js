@@ -24,4 +24,6 @@ const sql = `
   ) ENGINE=INNODB CHARACTER SET utf8mb4;
 `
 
-module.exports = sql
+module.exports = {
+  sql,
+}
