@@ -32,7 +32,6 @@ const sql = `
     job_position VARCHAR(255) NOT NULL DEFAULT '',
 
     PRIMARY KEY (id, account_id)
-
   ) ENGINE=INNODB CHARACTER SET utf8mb4;
 `
 
