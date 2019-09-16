@@ -4,9 +4,9 @@
  */
 
 const sql = `
-  CREATE TABLE zhihu_accounts (
-    id unsigned int NOT NULL AUTO_INCREMENT,
-    account_id unsigned BIGINT NOT NULL DEFAULT 0,
+  CREATE TABLE IF NOT EXISTS zhihu_accounts (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    account_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
     account_type ENUM('organization', 'personal', 'admin') NOT NULL DEFAULT 'personal',
 
     status ENUM('inactive', 'active', 'locked', 'archive', 'deleted') NOT NULL DEFAULT 'inactive',
@@ -16,7 +16,7 @@ const sql = `
     last_login_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     email VARCHAR(255) NOT NULL DEFAULT '',
-    phone_number unsigned int(11) NOT NULL DEFAULT 0,
+    phone_number int(11) UNSIGNED NOT NULL DEFAULT 0,
     password VARCHAR(64) NOT NULL DEFAULT '',
     salt VARCHAR(64) NOT NULL DEFAULT '',
     username VARCHAR(64) NOT NULL DEFAULT '',

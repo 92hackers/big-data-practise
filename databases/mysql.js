@@ -26,5 +26,5 @@ const initPool = async () => {
 
 
 module.exports = {
-  mysqlPoolClient: initPool(),
+  initMysqlPoolClient: initPool,
 }
