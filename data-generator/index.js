@@ -32,7 +32,7 @@ const generateAccounts = async (mysqlClient) => {
 }
 
 const concurrentJobs = 50
-const totalAccounts = 1000000
+const totalAccounts = 10000000
 
 const main = async () => {
   const start = Date.now()
