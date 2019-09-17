@@ -16,7 +16,7 @@ const sql = `
     content TEXT NOT NULL,
     author_account_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
     question_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
-    is_anonymous BIT(1) NOT NULL DEFAULT b'1',
+    is_anonymous CHAR(1) NOT NULL DEFAULT '1',
 
     PRIMARY KEY (id, answer_id)
   ) ENGINE=INNODB CHARACTER SET utf8mb4;

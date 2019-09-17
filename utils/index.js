@@ -12,7 +12,9 @@ const dataGeneratorRunner = (mysqlClient) => async ({
   concurrentJobs,
   grossRowsCount,
   generator,
+  tableName,
 }) => {
+  const start = Date.now()
   const outerLoopCount = grossRowsCount / concurrentJobs
 
   let i = 0
@@ -29,6 +31,10 @@ const dataGeneratorRunner = (mysqlClient) => async ({
     await Promise.all(promises)
     i++
   }
+
+  const seconds = (Date.now() - start) / 1000
+
+  console.log(`Finished creating ${grossRowsCount} ${tableName} in ${seconds} seconds`)
 }
 
 module.exports = {
