@@ -7,6 +7,8 @@ const {
   modelDefinitions,
 } = require('../databases')
 
+const utils = require('../utils')
+
 const [
   accountModel,
 ] = modelDefinitions
@@ -15,22 +17,7 @@ const generateAccounts = async (mysqlClient) => {
   const start = Date.now()
   const data = accountModel.generate_account()
 
-  const columns = []
-  const values = []
-
-  Object.entries(data).forEach(([ column, value ]) => {
-    columns.push(column)
-    values.push(`"${value}"`)
-  })
-
-  const columnsStr = `(${columns.join(',')})`
-  const valuesStr = `(${values.join(',')})`
-
-  const sql = `
-    INSERT INTO ${accountModel.tableName}${columnsStr}
-    VALUES${valuesStr};
-  `
-
+  const sql = utils.getInsertSql(accountModel.tableName, data)
   console.log('Sending create new account sql string to Mysql')
 
   const res = await mysqlClient.query(sql).catch(err => err)
@@ -44,33 +31,28 @@ const generateAccounts = async (mysqlClient) => {
   }
 }
 
-const concurrentJobs = 10
+const concurrentJobs = 50
 const totalAccounts = 1000000
 
 const main = async () => {
   const start = Date.now()
 
   const mysqlClient = await initDatabase()
+  const dataGeneratorRunner = utils.dataGeneratorRunner(mysqlClient)
 
-  const outerCount = totalAccounts / concurrentJobs
-  let i = 0
-  let j = 0
-
-  while (i < outerCount) {
-    const promises = []
-    j = 0
-    while (j < concurrentJobs) {
-      promises.push(generateAccounts(mysqlClient))
-      j++
-    }
-
-    await Promise.all(promises)
-    i++
-  }
+  await dataGeneratorRunner({
+    concurrentJobs,
+    grossRowsCount: totalAccounts,
+    generator: generateAccounts,
+  })
 
   const seconds = (Date.now() - start) / 1000
 
   console.log(`Finished creating ${totalAccounts} accounts in ${seconds} seconds`)
+  // Running records:
+  // 1. Finished creating 1000000 accounts in 2432.648 seconds
+  // 2. Finished creating 1000000 accounts in 2445.475 seconds
+  // 3. Finished creating 1000000 accounts in 2088.811 seconds concurrentJobs = 100
 }
 
 main()

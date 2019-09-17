@@ -74,6 +74,8 @@ const generate_account = () => {
   // Chinese id card number, may be ends with a signle X char
   const account_id = Random.id().replace('X', Random.d8())
 
+  // Important Notes:
+  // keys must be the same with fields definied in model definition
   return {
     account_id,
     avatar_url: Random.url('https'),
