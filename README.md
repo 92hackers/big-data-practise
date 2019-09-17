@@ -9,3 +9,8 @@ then mock millions, billions of data, store into database.
 2. How to modify app query sentences?
 
 
+## Mysql problems to be resolved under big data situation
+
+This section will record what i see when doing this big data practise.
+
+1. When concurrent inserting much more data into database, later insertions will be very slow.

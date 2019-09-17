@@ -12,6 +12,7 @@ const [
 ] = modelDefinitions
 
 const generateAccounts = async (mysqlClient) => {
+  const start = Date.now()
   const data = accountModel.generate_account()
 
   const columns = []
@@ -30,17 +31,46 @@ const generateAccounts = async (mysqlClient) => {
     VALUES${valuesStr};
   `
 
-  const res = await mysqlClient.query(sql)
+  console.log('Sending create new account sql string to Mysql')
+
+  const res = await mysqlClient.query(sql).catch(err => err)
+
+  const millSeconds = Date.now() - start
 
   if (res && res.affectedRows > 0) {
-    console.log(`Create an new account: ${data.account_id} successfully`)
+    console.log(`Successfully create an new account: ${data.account_id} in ${millSeconds} millseconds`)
+  } else {
+    console.log(`Failed to create an new account with Error: ${res.sqlMessage}`)
   }
 }
 
+const concurrentJobs = 10
+const totalAccounts = 1000000
+
 const main = async () => {
+  const start = Date.now()
+
   const mysqlClient = await initDatabase()
 
-  generateAccounts(mysqlClient)
+  const outerCount = totalAccounts / concurrentJobs
+  let i = 0
+  let j = 0
+
+  while (i < outerCount) {
+    const promises = []
+    j = 0
+    while (j < concurrentJobs) {
+      promises.push(generateAccounts(mysqlClient))
+      j++
+    }
+
+    await Promise.all(promises)
+    i++
+  }
+
+  const seconds = (Date.now() - start) / 1000
+
+  console.log(`Finished creating ${totalAccounts} accounts in ${seconds} seconds`)
 }
 
 main()

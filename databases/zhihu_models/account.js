@@ -67,12 +67,15 @@ const generate_account = () => {
   ])
 
   const one_sentence_introductioin = Random.pick([
-    Random.sentence(),
-    Random.csentence(),
+    Random.sentence(5, 10),
+    Random.csentence(5, 10),
   ])
 
+  // Chinese id card number, may be ends with a signle X char
+  const account_id = Random.id().replace('X', Random.d8())
+
   return {
-    account_id: Random.id(),
+    account_id,
     avatar_url: Random.url('https'),
     user_cover_url: Random.url('https'),
     city: Random.city(),
