@@ -15,7 +15,7 @@ const dataGeneratorRunner = (mysqlClient) => async ({
   tableName,
 }) => {
   const start = Date.now()
-  const outerLoopCount = grossRowsCount / concurrentJobs
+  const outerLoopCount = parseInt(grossRowsCount / concurrentJobs)
 
   let i = 0
   let j = 0
