@@ -17,21 +17,17 @@ const mainHandler = require('./main')
 const workersCount = os.cpus().length - 1
 
 if (cluster.isMaster) {
-  // Split total works into multiple workers
-  const grossRowsCount = parseInt(totalAnswers / workersCount)
-
   // Fork workers.
   for (let i = 0; i < workersCount; i++) {
-    cluster.fork({ grossRowsCount })
+    cluster.fork()
   }
 
   cluster.on('exit', (worker) => {
     console.log(`Worker ${worker.process.pid} exited`)
   })
 } else {
-  const { pid, env } = process
-
-  const { grossRowsCount } = env
+  // Split total works into multiple workers
+  const grossRowsCount = parseInt(totalAnswers / workersCount)
 
   mainHandler(grossRowsCount)
 }

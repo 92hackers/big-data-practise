@@ -154,8 +154,6 @@ const generateAnswers = async (mysqlClient) => {
 }
 
 
-// TODO: 使用 node.js cluster 模式，提高效率
-//
 const main = async (grossRowsCount) => {
   const mysqlClient = await initDatabase()
   const dataGeneratorRunner = utils.dataGeneratorRunner(mysqlClient)
