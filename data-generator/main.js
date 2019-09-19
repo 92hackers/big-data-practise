@@ -139,6 +139,8 @@ const generateAnswers = async (mysqlClient) => {
     return
   }
 
+  console.log('Create new answer')
+
   const newAnswer = answerModel.generate_answer(authorId, questionId)
   const sql = utils.getInsertSql(answerModel.tableName, newAnswer)
 
@@ -154,37 +156,35 @@ const generateAnswers = async (mysqlClient) => {
 }
 
 
-const main = async (grossRowsCount) => {
+const main = async (datasetGrossConfig) => {
   const mysqlClient = await initDatabase()
   const dataGeneratorRunner = utils.dataGeneratorRunner(mysqlClient)
 
-  if (!grossRowsCount) {
-    return
+  const modelSettingsMapping = {
+    account: {
+      generator: generateAccounts,
+      tableName: accountModel.tableName,
+    },
+    question: {
+      generator: generateQuestions,
+      tableName: questionModel.tableName,
+    },
+    answer: {
+      generator: generateAnswers,
+      tableName: answerModel.tableName,
+    },
   }
 
-  // Generate accounts data
-  // await dataGeneratorRunner({
-  //   concurrentJobs,
-  //   grossRowsCount: totalAccounts,
-  //   generator: generateAccounts,
-  //   tableName: accountModel.tableName,
-  // })
+  for (let { name, grossRowsCount } of datasetGrossConfig) {
+    const { generator, tableName } = modelSettingsMapping[name]
 
-  // Generate questions data
-  // await dataGeneratorRunner({
-  //   concurrentJobs,
-  //   grossRowsCount: totalQuestions,
-  //   generator: generateQuestions,
-  //   tableName: questionModel.tableName,
-  // })
-
-  // Generate answers data
-  await dataGeneratorRunner({
-    concurrentJobs,
-    grossRowsCount,
-    generator: generateAnswers,
-    tableName: answerModel.tableName,
-  })
+    await dataGeneratorRunner({
+      concurrentJobs,
+      grossRowsCount,
+      generator,
+      tableName,
+    })
+  }
 }
 
 module.exports = main

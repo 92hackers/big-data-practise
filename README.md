@@ -5,12 +5,27 @@ then mock millions, billions of data, store into database.
 
 ## Features
 
-1. How to optimize Mysql database, make the api response time lower?
-2. How to modify app query sentences?
+1. Super fast data generation, concurrently generate billions data in Node.js cluster mode.
+2. Full problem list, to track detail problems we will facing under big data scenario.
+3. Data models mocked from an living website: https://zhihu.com, a Quora-like Ask && Answer product.
+4. Friendly to all levels developers, easy to set up, and full tutorials to help.
 
 
-## Mysql problems to be resolved under big data situation
+## Hardware requirements
 
-This section will record what i see when doing this big data practise.
+You should owns a little bit high performance computer, which will speed up your
+practise, give you my PC as an example:
 
-1. When concurrent inserting much more data into database, later insertions will be very slow.
+* CPU: 4 x Core i5-7500 @ 3.4GHz
+* Memory: 16G
+* Disk: 256G SSD
+
+Big data practise requires more resource, especially large amount of disk,
+when your practise involved backup, partion, replica and sharding
+
+
+## Tutorial
+
+Full tutorial to begin your practise
+
+### Requirements
