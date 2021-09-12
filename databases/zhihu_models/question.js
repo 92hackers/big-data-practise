@@ -9,6 +9,10 @@ const { Random } = Mock
 
 const tableName = 'zhihu_questions'
 
+const foreignKey = `CONSTRAINT 'question_author_id_fk' FOREIGN KEY author_account_id
+REFERENCES 'zhihu_accounts' account_id,
+`
+
 const sql = `
   CREATE TABLE IF NOT EXISTS ${tableName} (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
