@@ -1,5 +1,4 @@
-# This file will record many mistakes, errors, questions, problems i faced when
-doing the practise
+# The file will record many mistakes, errors, questions, problems i faced when making the practise
 
 ### Problems
 

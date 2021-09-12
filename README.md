@@ -20,7 +20,7 @@ practise, give you my PC as an example:
 * Memory: 16G
 * Disk: 256G SSD
 
-Big data practise requires more resource, especially large amount of disk,
+Bigger data set requires more resource, especially large amount of disk,
 when your practise involved backup, partion, replica and sharding
 
 
